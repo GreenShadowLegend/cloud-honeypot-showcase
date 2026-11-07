@@ -9,8 +9,9 @@ Built as a hands-on project to study live attacker behavior on the open internet
   <img src="screenshots/wazuh-dashboard.png" width="49%" alt="Wazuh SIEM dashboard" />
 </p>
 
-*Left: T-Pot's live attack map, showing real-time connections from across the internet against the exposed honeypot services. 
-*Right: the Wazuh dashboard over a 24h window - 95k+ total events, 1,158 authentication failures, 49 successes, and 70 alerts at level 12+ (the threshold where the custom correlation rules start flagging real attack activity).*
+**Left:** T-Pot's live attack map, showing real-time connections from across the internet against the exposed honeypot services.
+
+**Right:** the Wazuh dashboard over a 24h window - 95k+ total events, 1,158 authentication failures, 49 successes, and 70 alerts at level 12+ (the threshold where the custom correlation rules start flagging real attack activity).
 
 ## Architecture
 
