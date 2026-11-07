@@ -1,0 +1,17 @@
+<!--
+  Active Response block from /var/ossec/etc/ossec.conf (Wazuh manager).
+
+  Triggers only on rule 100109 ("System possibly compromised" - the final
+  stage of the correlation chain in wazuh-rules/local_rules.xml, which
+  fires only after a malware-like command AND a subsequent file download
+  are both observed from the same source IP). This is deliberate: earlier,
+  lower-confidence rules (brute-force, single malicious command) do NOT
+  trigger a block, so the honeypot keeps collecting intelligence on an
+  attacker until the multi-stage compromise is confirmed.
+-->
+<active-response>
+  <command>firewall-drop</command>
+  <location>local</location>
+  <rules_id>100109</rules_id>
+  <timeout>3600</timeout>
+</active-response>

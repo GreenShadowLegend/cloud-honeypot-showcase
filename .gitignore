@@ -1,0 +1,17 @@
+# Never commit full raw log exports - keep sample-logs/ curated and small
+*.log
+*.log.gz
+elasticsearch-data/
+docker-volumes/
+
+# Secrets / credentials - never commit these
+*.pem
+*.key
+id_rsa*
+*.env
+ossec.conf
+authorized_keys
+
+# OS/editor noise
+.DS_Store
+*.swp

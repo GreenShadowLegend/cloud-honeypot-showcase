@@ -1,0 +1,94 @@
+<!-- Local rules -->
+
+<!-- Modify it at your will. -->
+<!-- Copyright (C) 2015, Wazuh Inc. -->
+
+<!-- Example -->
+<group name="local,syslog,sshd,">
+
+  <!--
+  Dec 10 01:02:02 host sshd[1234]: Failed none for root from 1.1.1.1 port 1066 ssh2
+  -->
+  <rule id="100001" level="5">
+    <if_sid>5716</if_sid>
+    <srcip>1.1.1.1</srcip>
+    <description>sshd: authentication failed from IP 1.1.1.1.</description>
+    <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,</group>
+  </rule>
+
+</group>
+
+<group name="local,cowrie,">
+
+  <rule id="100100" level="3">
+    <location>cowrie.json</location>
+    <field name="eventid">cowrie.session.connect</field>
+    <description>Cowrie: New connection to honeypot from $(src_ip)</description>
+    <group>cowrie,recon,</group>
+  </rule>
+
+  <rule id="100101" level="5">
+    <location>cowrie.json</location>
+    <field name="eventid">cowrie.login.failed</field>
+    <description>Cowrie: Failed login attempt from $(src_ip) - user: $(username)</description>
+    <group>cowrie,authentication_failed,</group>
+  </rule>
+
+  <rule id="100102" level="7">
+    <location>cowrie.json</location>
+    <field name="eventid">cowrie.login.success</field>
+    <description>Cowrie: Successful login from $(src_ip) - user: $(username)</description>
+    <group>cowrie,authentication_success,</group>
+  </rule>
+
+  <rule id="100103" level="8">
+    <location>cowrie.json</location>
+    <field name="eventid">cowrie.command.input</field>
+    <description>Cowrie: Command executed by attacker from $(src_ip): $(input)</description>
+    <group>cowrie,attack,</group>
+  </rule>
+
+  <rule id="100104" level="12">
+    <location>cowrie.json</location>
+    <field name="eventid">cowrie.session.file_download</field>
+    <description>Cowrie: File download/write detected from $(src_ip)</description>
+    <group>cowrie,attack,persistence,</group>
+  </rule>
+
+  <rule id="100105" level="3">
+    <location>cowrie.json</location>
+    <field name="eventid">cowrie.session.closed</field>
+    <description>Cowrie: Session closed from $(src_ip)</description>
+    <group>cowrie,recon,</group>
+  </rule>
+
+  <rule id="100106" level="10" frequency="10" timeframe="60">
+    <if_matched_sid>100101</if_matched_sid>
+    <same_field>src_ip</same_field>
+    <description>Cowrie: Brute-force attack from $(src_ip) </description>
+    <group>cowrie, brute_force, attack, authentication_failed,  </group>
+  </rule>
+
+  <rule id="100107" level="13">
+    <if_sid>100103</if_sid>
+    <field name="input" type="pcre2">(?i)(wget|curl|chmod\s+\+x|base64\s+-d|/dev/shm|nc\s+-e|python\s+-c|perl\s+-e)</field>
+    <description>Cowrie: Dangerous/malware-like command ran by $(src_ip): $(input)</description>
+    <group>cowrie,attack,malware_behavior,</group>
+  </rule>
+
+  <rule id="100108" level="0" timeframe="120">
+    <if_sid>100104</if_sid>
+    <if_matched_sid>100107</if_matched_sid>
+    <description>Cowrie: File downloaded succesfully after malicious command. Corelation rule </description>
+    <same_field>src_ip</same_field>
+  </rule>
+
+  <rule id="100109" level="15" timeframe="600">
+    <if_sid>100107</if_sid>
+    <if_matched_sid>100108</if_matched_sid>
+    <same_field>src_ip</same_field>
+    <description>Cowrie: System possibly compromised!, attacker $(src_ip) downloaded a file and ran a malware specific command.</description>
+    <group>cowrie,attack,malware_behaviour,compromised</group>
+  </rule>
+
+</group>
