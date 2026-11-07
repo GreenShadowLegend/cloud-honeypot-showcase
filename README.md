@@ -4,6 +4,13 @@ A self-hosted honeypot (T-Pot: Cowrie, Honeytrap) deployed on a Google Cloud VM,
 
 Built as a hands-on project to study live attacker behavior on the open internet and practice detection engineering, incident troubleshooting, and cloud/Linux systems administration.
 
+<p float="left">
+  <img src="screenshots/tpot-attack-map.png" width="49%" alt="T-Pot live attack map" />
+  <img src="screenshots/wazuh-dashboard.png" width="49%" alt="Wazuh SIEM dashboard" />
+</p>
+
+*Left: T-Pot's live attack map, showing real-time connections from across the internet against the exposed honeypot services. Right: the Wazuh dashboard over a 24h window - 95k+ total events, 1,158 authentication failures, 49 successes, and 70 alerts at level 12+ (the threshold where the custom correlation rules start flagging real attack activity).*
+
 ## Architecture
 
 | Layer | Component | Role |
@@ -32,7 +39,28 @@ Kibana visualizes raw events; Wazuh is the engine that decides which events matt
 
 Logs here are a **curated sample**, not a full export — enough to show the detection chain firing on real traffic, without shipping gigabytes of raw data into a git repo.
 
-## Key incident: disk-full boot failure and recovery
+## Custom detection engineering (Wazuh)
+
+Built a four-stage correlation chain in `wazuh-rules/local_rules.xml` to turn raw Cowrie honeypot events into a single high-confidence alert, instead of flooding the dashboard with isolated low-value events:
+
+1. **Brute-force detection** (`100106`) — frequency-based correlation: 10+ failed logins within 60 seconds from the same source IP.
+2. **Malicious command detection** (`100107`) — PCRE2 regex match on executed commands (`wget`, `curl`, `chmod +x`, `base64 -d`, `/dev/shm`, reverse shells, etc.).
+3. **Silent correlation marker** (`100108`, alert level 0, no visible alert) — fires when a file download is observed shortly after a malicious command, linking the two events by source IP.
+4. **Confirmed compromise** (`100109`, alert level 15, maximum severity) — fires when a second malicious command follows the marker from step 3, capturing the realistic attack pattern: download a payload, then execute it.
+
+Also debugged real Wazuh XML rule-loading failures (missing closing quotes, missing mandatory `<description>` tags) by reading manager error logs and validating every change with `wazuh-analysisd -t` before restarting — a single malformed rule disables the *entire* custom ruleset, so pre-flight validation is non-negotiable.
+
+## Active Response design
+
+Configured Wazuh Active Response to automatically block (via `firewall-drop`, 1-hour timeout) the source IP of any alert matching **only** the final "confirmed compromise" rule (`100109`) — deliberately not the earlier brute-force or single-command rules.
+
+This is a deliberate trade-off: blocking too early kills the honeypot's intelligence-gathering value (you lose the chance to observe what the attacker does next), while waiting for a confirmed multi-stage compromise before blocking still cuts off real threats once they're proven, not just suspected.
+
+Confirmed working end-to-end against the controlled test described above: rule 100109 firing triggered `firewall-drop` against the test source IP, with the block visible in `/var/ossec/logs/active-responses.log`.
+
+## Incidents
+
+### Disk-full boot failure and recovery
 
 The VM stopped responding to SSH after the boot disk was resized from the GCP Console to 120 GB. Root cause analysis via the serial console showed `cloud-init` crashing with `OSError: [Errno 28] No space left on device`, even though the underlying disk had been enlarged.
 
@@ -49,17 +77,6 @@ The VM stopped responding to SSH after the boot disk was resized from the GCP Co
 
 Result: disk usage dropped from 99.97% full (50 GB) to 16% used of 117 GB, with zero data loss and the honeypot fully operational again.
 
-## Custom detection engineering (Wazuh)
-
-Built a four-stage correlation chain in `wazuh-rules/local_rules.xml` to turn raw Cowrie honeypot events into a single high-confidence alert, instead of flooding the dashboard with isolated low-value events:
-
-1. **Brute-force detection** (`100106`) — frequency-based correlation: 10+ failed logins within 60 seconds from the same source IP.
-2. **Malicious command detection** (`100107`) — PCRE2 regex match on executed commands (`wget`, `curl`, `chmod +x`, `base64 -d`, `/dev/shm`, reverse shells, etc.).
-3. **Silent correlation marker** (`100108`, alert level 0, no visible alert) — fires when a file download is observed shortly after a malicious command, linking the two events by source IP.
-4. **Confirmed compromise** (`100109`, alert level 15, maximum severity) — fires when a second malicious command follows the marker from step 3, capturing the realistic attack pattern: download a payload, then execute it.
-
-Also debugged real Wazuh XML rule-loading failures (missing closing quotes, missing mandatory `<description>` tags) by reading manager error logs and validating every change with `wazuh-analysisd -t` before restarting — a single malformed rule disables the *entire* custom ruleset, so pre-flight validation is non-negotiable.
-
 ### Validating the correlation chain: two real bugs found by testing
 
 Writing a correlation rule that *looks* correct isn't the same as one that *fires* correctly. After deployment, the two single-event rules (100100-100105, 100107) were generating alerts from real attacker traffic, but the three correlation rules (100106 brute-force, 100108 silent marker, 100109 confirmed compromise) never fired — despite hundreds of brute-force attempts in the logs that should have tripped 100106.
@@ -72,14 +89,6 @@ Two real bugs surfaced:
 2. **`frequency` has an undocumented minimum of 2.** Setting `frequency="1"` (intending "this prior rule just needs to have matched once") throws `Invalid frequency: 1. Must be higher than 1 and lower than 10000` at rule-load time and disables the whole ruleset. For simple "did rule X match previously" correlation (as opposed to "did rule X match N times"), the fix is to omit `frequency` entirely and rely on `<if_matched_sid>` + `<timeframe>` alone.
 
 After both fixes and a manager restart, the same controlled test produced the full chain live: 100107 (malicious command) → 100104 (download) → 100108 (silent marker, level 0) → 100109 (confirmed compromise, level 15) → Active Response blocking the test source IP. `sample-logs/wazuh_sample_alerts.json` captures one real alert per rule from this validated run.
-
-## Active Response design
-
-Configured Wazuh Active Response to automatically block (via `firewall-drop`, 1-hour timeout) the source IP of any alert matching **only** the final "confirmed compromise" rule (`100109`) — deliberately not the earlier brute-force or single-command rules.
-
-This is a deliberate trade-off: blocking too early kills the honeypot's intelligence-gathering value (you lose the chance to observe what the attacker does next), while waiting for a confirmed multi-stage compromise before blocking still cuts off real threats once they're proven, not just suspected.
-
-Confirmed working end-to-end against the controlled test described above: rule 100109 firing triggered `firewall-drop` against the test source IP, with the block visible in `/var/ossec/logs/active-responses.log`.
 
 ## Skills demonstrated
 
